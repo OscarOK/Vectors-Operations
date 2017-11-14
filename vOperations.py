@@ -2,10 +2,10 @@ from math import acos, degrees #FROM MATH JUST IMPORT acos AND degrees
 #acos: cos^-1 FOR GET THE ANGLE BETWEEN VECTORS
 #degrees: THE FUNCTIONS WORK ON RAD, THIS IS A WAY TO PASS RAD TO DEG
 
-def isComplex(v):
+def isComplex(v): #DETERMINES IF THE ARRAY IS COMPLEX
     n = len(v)
 
-    for i in v:
+    for i in v: #CHECK IF ATLESS ONE ELEMENT IS COMPLEX
         if isinstance(i, complex):
             return True
     return False
@@ -14,7 +14,7 @@ def vInnerProduct(vOne, vTwo): #GET THE INNER PRODUCT OF VECTORS
 
     if len(vOne) != len(vTwo): #CHECK IF THE VETORS ARE IN THE SAME SPACE
 
-        print('MATCH ERROR: vectors in different Rn')
+        print('MATCH ERROR: vectors in different n')
 
         return
 
@@ -43,13 +43,12 @@ def vNorm(v): #GET THE NORM OF A VECTOR
 def vAngle(vOne, vTwo): #GET THE ANGLE BETWEEN TWO VECTORS
     if len(vOne) != len(vTwo):
 
-        print('MATCH ERROR: vectors in different Rn')
+        print('MATCH ERROR: vectors in different n')
 
         return
 
     innerProduct = vInnerProduct(vOne, vTwo) #SET THE INNER PRODUCT BETWEEN THE TWO VECTORS
     norms        = vNorm(vOne) * vNorm(vTwo) #SET THE PRODUCT BETWEEN THE NORM OF THE VECTORS
-
 
     if norms == 0: #JUST IN CASE WE ARE DEALING WITH A VECTOR ZERO
 
@@ -63,9 +62,3 @@ def vAngle(vOne, vTwo): #GET THE ANGLE BETWEEN TWO VECTORS
         innerProduct = innerProduct.real
 
     return degrees(acos(innerProduct/norms)) #PASS THE RESULT FROM RAD TO DEGREES
-
-
-a = [1+1j]
-b = [1-1j]
-
-print(vAngle(a,b))
