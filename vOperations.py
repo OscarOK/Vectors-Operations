@@ -2,6 +2,14 @@ from math import acos, degrees #FROM MATH JUST IMPORT acos AND degrees
 #acos: cos^-1 FOR GET THE ANGLE BETWEEN VECTORS
 #degrees: THE FUNCTIONS WORK ON RAD, THIS IS A WAY TO PASS RAD TO DEG
 
+def isComplex(v):
+    n = len(v)
+
+    for i in v:
+        if isinstance(i, complex):
+            return True
+    return False
+
 def vInnerProduct(vOne, vTwo): #GET THE INNER PRODUCT OF VECTORS
 
     if len(vOne) != len(vTwo): #CHECK IF THE VETORS ARE IN THE SAME SPACE
@@ -13,7 +21,7 @@ def vInnerProduct(vOne, vTwo): #GET THE INNER PRODUCT OF VECTORS
     n            = len(vOne)#GET THE LENGTH OF THE VECTOR
     innerProduct = 0        #INIT RESULT VARIABLE
 
-    if isinstance(vOne, complex) or isinstance(vTwo, complex):
+    if isComplex(vOne) or isComplex(vTwo):
         #INNER PRODUCT OF COMPLEX VECTORS
         for i in range(0, n):
             innerProduct += vOne[i] * vTwo[i].conjugate()
@@ -25,13 +33,14 @@ def vInnerProduct(vOne, vTwo): #GET THE INNER PRODUCT OF VECTORS
     return innerProduct
 
 def vNorm(v): #GET THE NORM OF A VECTOR
+    innerProduct = vInnerProduct(v,v)
 
-    if isinstance(v, complex):
-        print("Simon")
-    return (vInnerProduct(v, v))**(1/2) #WE KNOW THAT THE NORM IS THE SQRT OF THE INNER PRODUCT OF THE VECTOR WITH ITSELF
+    if isinstance(innerProduct, complex):
+        innerProduct = innerProduct.real
+
+    return (innerProduct)**(1/2) #WE KNOW THAT THE NORM IS THE SQRT OF THE INNER PRODUCT OF THE VECTOR WITH ITSELF
 
 def vAngle(vOne, vTwo): #GET THE ANGLE BETWEEN TWO VECTORS
-
     if len(vOne) != len(vTwo):
 
         print('MATCH ERROR: vectors in different Rn')
@@ -48,10 +57,15 @@ def vAngle(vOne, vTwo): #GET THE ANGLE BETWEEN TWO VECTORS
 
         return
 
+    if isComplex(vOne) or isComplex(vTwo):
+        innerProduct += innerProduct.conjugate()
+        innerProduct *= 0.5
+        innerProduct = innerProduct.real
+
     return degrees(acos(innerProduct/norms)) #PASS THE RESULT FROM RAD TO DEGREES
 
 
-a = [1+2j]
-b = [2+3j]
+a = [1+1j]
+b = [1-1j]
 
-print(vInnerProduct(a,b))
+print(vAngle(a,b))
